@@ -1,0 +1,17 @@
+{
+    "Name":"The Office",
+    "Parts":[
+        {
+            "BackgroundImage":"the office round1.png",
+            "DrawCoordinateX":0,
+            "DrawCoordinateY":0,
+            "WalkingArea":{
+                "X":0,
+                "Y":300,
+                "Width":3000,
+                "Height":2400
+            }
+        }
+    ]
+
+}
