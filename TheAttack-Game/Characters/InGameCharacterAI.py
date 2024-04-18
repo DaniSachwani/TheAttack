@@ -7,5 +7,6 @@ class InGameCharacterAI(InGameCharacter.InGameCharacter):
         self.Character.location = location
 
     def HandleMovement(self, WIN, FONT, WIDTH, HEIGHT):
-        self.Character.Render( WIN, FONT, WIDTH, HEIGHT)
+        #self.Character.Render( WIN, FONT, WIDTH, HEIGHT)
+        return self.Character.location
         

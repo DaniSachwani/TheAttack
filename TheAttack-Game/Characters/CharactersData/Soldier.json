@@ -1,5 +1,8 @@
 {
     "Name":"Soldier",
+    "Sounds":{
+        "Walking":"Character/Policeman/footsteps.mp3"
+    },
     "Actions":
     {
         "Standing":[
@@ -19,7 +22,7 @@
                         "Height":300            
                     }
                 ],
-                "DelaybeforeNextFrame":25
+                "DelaybeforeNextFrame":100
             }
         ],
         "Walking":[
@@ -39,7 +42,8 @@
                         "Height":300            
                     }
                 ],
-                "DelaybeforeNextFrame":25
+                "DelaybeforeNextFrame":100,
+                "SoundName":"Walking"
             },
             {
                 "Image":"Policeman/Running/2 with goggles.png",
@@ -57,7 +61,7 @@
                         "Height":300            
                     }
                 ],
-                "DelaybeforeNextFrame":25
+                "DelaybeforeNextFrame":100
             },{
                 "Image":"Policeman/Running/3 with goggles.png",
                 "Bounds":{
@@ -74,7 +78,8 @@
                         "Height":300            
                     }
                 ],
-                "DelaybeforeNextFrame":25
+                "DelaybeforeNextFrame":100,
+                "SoundName":"Walking"
             },{
                 "Image":"Policeman/Running/4 with goggles.png",
                 "Bounds":{
@@ -91,7 +96,7 @@
                         "Height":300            
                     }
                 ],
-                "DelaybeforeNextFrame":25
+                "DelaybeforeNextFrame":100
             }
         ]
     }

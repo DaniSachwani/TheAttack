@@ -28,11 +28,11 @@ FONT = pygame.font.SysFont("consolas",30)
 
 def main():
     detectpressed = False
-    #clock = pygame.time.Clock()
+    clock = pygame.time.Clock()
     RenderObj = MainMenu.MainMenu()
     while Common.Common.Run:
     
-        #clock.tick(100)
+        clock.tick(100)
 
         if(not detectpressed or (detectpressed and (key != Common.Common.Bconfig.buttonConfigs[0].Up
                                    and key != Common.Common.Bconfig.buttonConfigs[0].Down
