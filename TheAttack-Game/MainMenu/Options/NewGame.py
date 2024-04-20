@@ -41,16 +41,11 @@ class NewGame(Renderer):
         Common.ArenaManager.Arenas[0].playerlocation= playerlocations[humanplayerindex]
         backimage = Common.ArenaManager.Arenas[0].Render(WIN, FONT, WIDTH, HEIGHT)
         
-        arenasize = Common.ArenaManager.Arenas[0].GetSize()
         i=0
         for char in self.Characters:
             if isinstance(char, InGameCharacterAI.InGameCharacterAI):
-                char.Character.arenasize = arenasize
-                char.Character.arenalocation = Common.ArenaManager.Arenas[0].location
                 char.Character.Render( backimage, FONT, WIDTH, HEIGHT)
             else:
-                char.Character.arenasize = arenasize
-                char.Character.arenalocation = Common.ArenaManager.Arenas[0].location
                 char.Character.CameraShouldFollowPlayer=True
                 char.Character.Render( backimage, FONT, WIDTH, HEIGHT)
 

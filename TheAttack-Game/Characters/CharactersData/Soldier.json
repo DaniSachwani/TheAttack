@@ -1,7 +1,8 @@
 {
     "Name":"Soldier",
     "Sounds":{
-        "Walking":"Character/Policeman/footsteps.mp3"
+        "Walking":"Character/Policeman/footsteps.mp3",
+        "RifleSound":"Character/Policeman/riflefire.mp3"
     },
     "Actions":
     {
@@ -22,7 +23,15 @@
                         "Height":300            
                     }
                 ],
-                "DelaybeforeNextFrame":100
+                "DelaybeforeNextFrame":100,
+                "DelaybeforeNextAction":false,
+                "OnAction":{
+                    "Up":"Walking",
+                    "Down":"Walking",
+                    "Left":"Walking",
+                    "Right":"Walking",
+                    "Action1":"Shooting"
+                }
             }
         ],
         "Walking":[
@@ -43,7 +52,15 @@
                     }
                 ],
                 "DelaybeforeNextFrame":100,
-                "SoundName":"Walking"
+                "DelaybeforeNextAction":false,
+                "SoundName":"Walking",
+                "OnAction":{
+                    "Up":"Walking",
+                    "Down":"Walking",
+                    "Left":"Walking",
+                    "Right":"Walking",
+                    "Action1":"Shooting"
+                }
             },
             {
                 "Image":"Policeman/Running/2 with goggles.png",
@@ -61,7 +78,16 @@
                         "Height":300            
                     }
                 ],
-                "DelaybeforeNextFrame":100
+                "DelaybeforeNextFrame":100,
+                "DelaybeforeNextAction":false,
+                "OnAction":{
+                    "Up":"Walking",
+                    "Down":"Walking",
+                    "Left":"Walking",
+                    "Right":"Walking",
+                    "Action1":"Shooting"
+                }
+
             },{
                 "Image":"Policeman/Running/3 with goggles.png",
                 "Bounds":{
@@ -79,7 +105,16 @@
                     }
                 ],
                 "DelaybeforeNextFrame":100,
-                "SoundName":"Walking"
+                "DelaybeforeNextAction":false,
+                "SoundName":"Walking",
+                "OnAction":{
+                    "Up":"Walking",
+                    "Down":"Walking",
+                    "Left":"Walking",
+                    "Right":"Walking",
+                    "Action1":"Shooting"
+                }
+
             },{
                 "Image":"Policeman/Running/4 with goggles.png",
                 "Bounds":{
@@ -96,8 +131,93 @@
                         "Height":300            
                     }
                 ],
-                "DelaybeforeNextFrame":100
+                "DelaybeforeNextFrame":100,
+                "DelaybeforeNextAction":false,
+                "OnAction":{
+                    "Up":"Walking",
+                    "Down":"Walking",
+                    "Left":"Walking",
+                    "Right":"Walking",
+                    "Action1":"Shooting"
+                }
+            }
+        ],
+        "Shooting":[
+            {
+                "Image":"Policeman/shoot/shoot with aim - fire animation 1.png",
+                "Bounds":{
+                    "X":0,
+                    "Y":0,
+                    "Width":300,
+                    "Height":300
+                },
+                "InteractionArea":[
+                    {
+                        "X":0,
+                        "Y":0,
+                        "Width":300,
+                        "Height":300            
+                    }
+                ],
+                "Displacement":{
+                    "X":-5,
+                    "Y":0
+                },
+                "DelaybeforeNextFrame":200,
+                "DelaybeforeNextAction":false,
+                "SoundName":"RifleSound"
+            },
+            {
+                "Image":"Policeman/shoot/shoot with aim - fire animation 2.png",
+                "Bounds":{
+                    "X":0,
+                    "Y":0,
+                    "Width":300,
+                    "Height":300
+                },
+                "InteractionArea":[
+                    {
+                        "X":0,
+                        "Y":0,
+                        "Width":300,
+                        "Height":300            
+                    }
+                ],
+                "Displacement":{
+                    "X":-5,
+                    "Y":0
+                },
+                "DelaybeforeNextFrame":200,
+                "DelaybeforeNextAction":false
+            },
+            {
+                "Image":"Policeman/shoot/shoot with aim.png",
+                "Bounds":{
+                    "X":0,
+                    "Y":0,
+                    "Width":300,
+                    "Height":300
+                },
+                "InteractionArea":[
+                    {
+                        "X":0,
+                        "Y":0,
+                        "Width":300,
+                        "Height":300            
+                    }
+                ],
+                "Displacement":{
+                    "X":-5,
+                    "Y":0
+                },
+                "DelaybeforeNextFrame":2000,
+                "DelaybeforeNextAction":true,
+                "OnAction":{
+                    "Action1":"Shooting"
+                }
+                
             }
         ]
+
     }
 }
