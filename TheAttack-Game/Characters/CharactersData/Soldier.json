@@ -163,9 +163,10 @@
                     "X":-5,
                     "Y":0
                 },
-                "DelaybeforeNextFrame":200,
-                "DelaybeforeNextAction":false,
+                "DelaybeforeNextFrame":100,
+                "DelaybeforeNextAction":true,
                 "SoundName":"RifleSound"
+                
             },
             {
                 "Image":"Policeman/shoot/shoot with aim - fire animation 2.png",
@@ -187,8 +188,8 @@
                     "X":-5,
                     "Y":0
                 },
-                "DelaybeforeNextFrame":200,
-                "DelaybeforeNextAction":false
+                "DelaybeforeNextFrame":100,
+                "DelaybeforeNextAction":true
             },
             {
                 "Image":"Policeman/shoot/shoot with aim.png",
@@ -213,6 +214,10 @@
                 "DelaybeforeNextFrame":2000,
                 "DelaybeforeNextAction":true,
                 "OnAction":{
+                    "Up":"Walking",
+                    "Down":"Walking",
+                    "Left":"Walking",
+                    "Right":"Walking",
                     "Action1":"Shooting"
                 }
                 

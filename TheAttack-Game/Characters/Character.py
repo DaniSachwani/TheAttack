@@ -57,31 +57,38 @@ class Character(Renderer):
             self.location[0] = prevx
             self.location[1] = prevy
         
-        current_time = pygame.time.get_ticks()
-        if current_time - self.last_time >= self.Actions[self.CurrentAction][self.currentFrame]["DelaybeforeNextFrame"]:
-            if("SoundName" in self.Actions[self.CurrentAction][self.currentFrame]):
-                self.SoundAudios[self.Actions[self.CurrentAction][self.currentFrame]["SoundName"]].play()
-
-            self.currentFrame+=1
-
-            self.CurrentAction = self.ActionToReplace
-            if self.currentFrame >= len(self.Actions[self.CurrentAction]):
-                self.currentFrame = 0     
-            
-            self.last_time = pygame.time.get_ticks()
-
-
+        ActionReplaced = False
         self.prevaction = self.CurrentAction
         if("OnAction" in self.Actions[self.CurrentAction][self.currentFrame]):
             if(self.KeyPress !=""):
                 if(self.KeyPress in self.Actions[self.CurrentAction][self.currentFrame]["OnAction"] ):
                     self.ActionToReplace = self.Actions[self.CurrentAction][self.currentFrame]["OnAction"][self.KeyPress]
+                    if(self.CurrentAction != self.prevaction or self.Actions[self.CurrentAction][self.currentFrame]["DelaybeforeNextAction"]==True):
+                        ActionReplaced = True
             else:
                 self.ActionToReplace = next(iter(self.Actions))
 
+        current_time = pygame.time.get_ticks()
+        if ActionReplaced or self.Actions[self.CurrentAction][self.currentFrame]["DelaybeforeNextAction"]==False or (self.Actions[self.CurrentAction][self.currentFrame]["DelaybeforeNextAction"]==True and current_time - self.last_time >= self.Actions[self.CurrentAction][self.currentFrame]["DelaybeforeNextFrame"]):
+            
+            self.CurrentAction = self.ActionToReplace   
             if(self.CurrentAction != self.prevaction):
                 self.currentFrame = 0
 
+        
+        if(ActionReplaced or current_time - self.last_time >= self.Actions[self.CurrentAction][self.currentFrame]["DelaybeforeNextFrame"]):
+            if("SoundName" in self.Actions[self.CurrentAction][self.currentFrame]):
+                self.SoundAudios[self.Actions[self.CurrentAction][self.currentFrame]["SoundName"]].play()
+
+            self.currentFrame+=1
+
+            if self.currentFrame >= len(self.Actions[self.CurrentAction]):
+                self.currentFrame = 0     
+
+            self.last_time = pygame.time.get_ticks()
+
+
+        
         sprite = self.ActionsImages[self.CurrentAction][self.currentFrame]
         if(self.Facing == "Left"):
             sprite = pygame.transform.flip(sprite, True, False)
