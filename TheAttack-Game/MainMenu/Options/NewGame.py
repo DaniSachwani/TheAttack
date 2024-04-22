@@ -7,13 +7,15 @@ import copy
 class NewGame(Renderer):
 
     Characters = None
+    Objects = None
 
     def __init__(self):
         self.Characters = [
-            InGameCharacterInput.InGameCharacterInput(copy.deepcopy(Common.CharacterManager.Characters[0]),[400,400], Common.ArenaManager.Arenas[0]),
-            InGameCharacterAI.InGameCharacterAI(copy.deepcopy(Common.CharacterManager.Characters[0]),[100,400], Common.ArenaManager.Arenas[0])
+            InGameCharacterInput.InGameCharacterInput(copy.deepcopy(Common.CharacterManager.Characters["Soldier"]),[400,400], Common.ArenaManager.Arenas[0]),
+            InGameCharacterAI.InGameCharacterAI(copy.deepcopy(Common.CharacterManager.Characters["Soldier"]),[100,400], Common.ArenaManager.Arenas[0])
         ]
-    
+        self.Objects =[]
+
     def Render(self, WIN, FONT, WIDTH, HEIGHT):
         pass 
         
@@ -45,10 +47,21 @@ class NewGame(Renderer):
         for char in self.Characters:
             if isinstance(char, InGameCharacterAI.InGameCharacterAI):
                 char.Character.Render( backimage, FONT, WIDTH, HEIGHT)
+                object = char.Character.GetSpawnObject()
+                if(object != None):
+                    self.Objects.append(object)
             else:
                 char.Character.CameraShouldFollowPlayer=True
                 char.Character.Render( backimage, FONT, WIDTH, HEIGHT)
-
+                object = char.Character.GetSpawnObject()
+                if(object != None):
+                    self.Objects.append(object)
+        j=0
+        for obj in self.Objects:
+            obj.Render( backimage, FONT, WIDTH, HEIGHT)
+            if(obj.Destroyed ==True):
+                del self.Objects[j]
+            j+=1
 
         WIN.blit(backimage, (camera_location[0],camera_location[1]))
         pygame.display.update()    

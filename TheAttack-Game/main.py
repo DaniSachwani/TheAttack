@@ -8,7 +8,7 @@ from Arenas import ArenaManager
 from Characters import CharacterManager
 import Common
 from MainMenu.Options import NewGame
-
+from Objects import ObjectsManager
 pygame.init()
 WIN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
@@ -22,6 +22,7 @@ Common.Common.Sconfig = SoundConfig.SoundConfig();
 
 Common.Common.ArenaManager =  ArenaManager.ArenaManager();
 Common.Common.CharacterManager =  CharacterManager.CharacterManager();
+Common.Common.ObjectsManager =  ObjectsManager.ObjectsManager();
 
 pygame.font.init()
 FONT = pygame.font.SysFont("consolas",30)

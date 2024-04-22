@@ -165,7 +165,14 @@
                 },
                 "DelaybeforeNextFrame":100,
                 "DelaybeforeNextAction":true,
-                "SoundName":"RifleSound"
+                "SoundName":"RifleSound",
+                "SpawnObject":[
+                    {
+                        "Name":"GunShotAnimation",
+                        "X":-15,
+                        "Y":100
+                    }
+                ]
                 
             },
             {

@@ -1,6 +1,7 @@
 from Renderer import Renderer
 import pygame
 import Common
+import copy
 class Character(Renderer):
 
     currentFrame = 0
@@ -16,6 +17,7 @@ class Character(Renderer):
     prevaction = None
     Arena =None
     ActionToReplace = None
+    ObjectsToSpawn=[]
     def __init__(self,obj):
         self.Name = ""
         self.Actions = []
@@ -75,7 +77,10 @@ class Character(Renderer):
             if(self.CurrentAction != self.prevaction):
                 self.currentFrame = 0
 
-        
+        sprite = self.ActionsImages[self.CurrentAction][self.currentFrame]
+        if(self.Facing == "Left"):
+            sprite = pygame.transform.flip(sprite, True, False)
+
         if(ActionReplaced or current_time - self.last_time >= self.Actions[self.CurrentAction][self.currentFrame]["DelaybeforeNextFrame"]):
             if("SoundName" in self.Actions[self.CurrentAction][self.currentFrame]):
                 self.SoundAudios[self.Actions[self.CurrentAction][self.currentFrame]["SoundName"]].play()
@@ -87,12 +92,22 @@ class Character(Renderer):
 
             self.last_time = pygame.time.get_ticks()
 
+            if("SpawnObject" in self.Actions[self.CurrentAction][self.currentFrame]):
+                objectSpawnData = self.Actions[self.CurrentAction][self.currentFrame]["SpawnObject"]
+
+                for data in objectSpawnData:
+                    objectcopy = copy.deepcopy(Common.Common.ObjectsManager.Objects[data["Name"]])
+                    if (self.Facing=="Left"):                
+                        objectcopy.location = [self.location[0]-sprite.get_width()/2+data["X"],self.location[1]-sprite.get_height()+data["Y"]]#[0]- sprite.get_width()
+                    else:
+                        objectcopy.location = [self.location[0]+sprite.get_width()/2-data["X"],self.location[1]-sprite.get_height()+data["Y"]]#[0]- sprite.get_width()
+                    objectcopy.Arena = self.Arena
+                    objectcopy.Facing = self.Facing
+                    self.ObjectsToSpawn.append(objectcopy)
+
+
 
         
-        sprite = self.ActionsImages[self.CurrentAction][self.currentFrame]
-        if(self.Facing == "Left"):
-            sprite = pygame.transform.flip(sprite, True, False)
-
         if(self.CameraShouldFollowPlayer):
             camera_location=[self.location[0],self.location[1]]
             if(self.location[0]> self.arenasize["X"]+ WIDTH/2):
@@ -126,3 +141,11 @@ class Character(Renderer):
 
     def RenderWithNavigate(self, WIN, FONT, WIDTH, HEIGHT, Key):
         pass
+
+    def GetSpawnObject(self):
+        if len(self.ObjectsToSpawn) == 0:
+            return None
+        else:
+            obj = self.ObjectsToSpawn[0]
+            del self.ObjectsToSpawn[0]
+            return obj
