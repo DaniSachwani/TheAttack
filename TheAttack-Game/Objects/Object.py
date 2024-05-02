@@ -40,18 +40,14 @@ class Object(Renderer):
     
     def Render(self, WIN, FONT, WIDTH, HEIGHT):
         
-        prevx = self.location[0]
-        prevy = self.location[1]
-        
-        if(not self.Arena.InWalkingArea(self.location)):
-            self.location[0] = prevx
-            self.location[1] = prevy
-        
         ActionReplaced = False
         self.prevaction = self.CurrentAction
         if("OnAction" in self.Actions[self.CurrentAction][self.currentFrame]):
             if("Destroy" in self.Actions[self.CurrentAction][self.currentFrame]["OnAction"]):
-                self.Destroyed = True
+                if(self.Actions[self.CurrentAction][self.currentFrame]["OnAction"]["Destroy"] ==""):
+                    self.Destroyed = True
+                #elif(self.Actions[self.CurrentAction][self.currentFrame]["OnAction"]["Destroy"] ==""):
+                #todo when hit
 
             if(self.KeyPress !=""):
                 if(self.KeyPress in self.Actions[self.CurrentAction][self.currentFrame]["OnAction"] ):
@@ -67,6 +63,22 @@ class Object(Renderer):
             self.CurrentAction = self.ActionToReplace   
             if(self.CurrentAction != self.prevaction):
                 self.currentFrame = 0
+
+
+            if("Move" in self.Actions[self.CurrentAction][self.currentFrame]):
+                prevx = self.location[0]
+                prevy = self.location[1]
+            
+                if(self.Facing =="Right"):
+                    self.location[0] += self.Actions[self.CurrentAction][self.currentFrame]["Move"]["DisplacmentX"]
+                else:
+                    self.location[0] -= self.Actions[self.CurrentAction][self.currentFrame]["Move"]["DisplacmentX"]
+
+                self.location[1] += self.Actions[self.CurrentAction][self.currentFrame]["Move"]["DisplacmentY"]
+
+                if(not self.Arena.InWalkingArea(self.location,True)):
+                    self.location[0] = prevx
+                    self.location[1] = prevy
 
         
         if(ActionReplaced or current_time - self.last_time >= self.Actions[self.CurrentAction][self.currentFrame]["DelaybeforeNextFrame"]):

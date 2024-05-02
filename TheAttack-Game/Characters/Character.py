@@ -55,7 +55,7 @@ class Character(Renderer):
             self.Facing = "Right"
             self.location[0]+= 25
         
-        if(not self.Arena.InWalkingArea(self.location)):
+        if(not self.Arena.InWalkingArea(self.location,False)):
             self.location[0] = prevx
             self.location[1] = prevy
         
@@ -87,7 +87,7 @@ class Character(Renderer):
 
             self.currentFrame+=1
 
-            if self.currentFrame >= len(self.Actions[self.CurrentAction]):
+            if self.currentFrame >= len(self.Actions[self.CurrentAction] or ActionReplaced):
                 self.currentFrame = 0     
 
             self.last_time = pygame.time.get_ticks()
@@ -104,9 +104,6 @@ class Character(Renderer):
                     objectcopy.Arena = self.Arena
                     objectcopy.Facing = self.Facing
                     self.ObjectsToSpawn.append(objectcopy)
-
-
-
         
         if(self.CameraShouldFollowPlayer):
             camera_location=[self.location[0],self.location[1]]

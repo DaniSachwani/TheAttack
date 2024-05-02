@@ -1,0 +1,30 @@
+{
+    "Name":"GunBullet",
+    "Sounds":{
+    },
+    "Actions":
+    {
+        "Bullet":[
+            {
+                "Image":"GunBullet/GunBullet.png",
+                "Bounds":{
+                    "X":0,
+                    "Y":0,
+                    "Width":100,
+                    "Height":7
+                },
+                "InteractionArea":[
+                ],
+                "DelaybeforeNextFrame":50,
+                "DelaybeforeNextAction":false,
+                "Move":{
+                    "DisplacmentX":50,
+                    "DisplacmentY":0
+                },
+                "OnAction":{
+                    "Destroy":"Hit"
+                }
+            }
+        ]
+    }
+}

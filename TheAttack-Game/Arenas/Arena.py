@@ -45,15 +45,22 @@ class Arena(Renderer):
     def RenderWithNavigate(self, WIN, FONT, WIDTH, HEIGHT, Key):
         pass
 
-    def InWalkingArea(self,location):
+    def InWalkingArea(self,location,isObject):
         allowed = False
-        for part in self.Parts:
-            if(location[0] > part.WalkingArea.X 
-               and location[0] < part.WalkingArea.X + part.WalkingArea.Width
-               and location[1] > part.WalkingArea.Y
-               and location[1] < part.WalkingArea.Y + part.WalkingArea.Height
-               ):
-                allowed =True
+        if(isObject):
+            for part in self.Parts:
+                if(location[0] > part.WalkingArea.X 
+                and location[0] < part.WalkingArea.X + part.WalkingArea.Width
+                ):
+                    allowed =True
+        else:
+            for part in self.Parts:
+                if(location[0] > part.WalkingArea.X 
+                and location[0] < part.WalkingArea.X + part.WalkingArea.Width
+                and location[1] > part.WalkingArea.Y
+                and location[1] < part.WalkingArea.Y + part.WalkingArea.Height
+                ):
+                    allowed =True
 
         return allowed
     

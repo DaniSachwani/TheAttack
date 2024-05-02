@@ -171,6 +171,11 @@
                         "Name":"GunShotAnimation",
                         "X":-15,
                         "Y":100
+                    },
+                    {
+                        "Name":"GunBullet",
+                        "X":-50,
+                        "Y":77
                     }
                 ]
                 
