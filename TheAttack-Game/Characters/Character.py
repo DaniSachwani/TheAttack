@@ -9,7 +9,7 @@ class Character(Renderer):
     SoundAudios ={}
     CurrentAction = "Standing"
     KeyPress = ""
-    location = [0,0]
+    location = [0,0,0]
     Facing = "Right"
     last_time = None
     arenasize ={}
@@ -18,6 +18,7 @@ class Character(Renderer):
     Arena =None
     ActionToReplace = None
     ObjectsToSpawn=[]
+    Health =100;
     def __init__(self,obj):
         self.Name = ""
         self.Actions = []
@@ -61,7 +62,7 @@ class Character(Renderer):
         
         ActionReplaced = False
         self.prevaction = self.CurrentAction
-        if("OnAction" in self.Actions[self.CurrentAction][self.currentFrame]):
+        if("OnAction" in self.Actions[self.CurrentAction][self.currentFrame] and self.CurrentAction != "Hurt"):
             if(self.KeyPress !=""):
                 if(self.KeyPress in self.Actions[self.CurrentAction][self.currentFrame]["OnAction"] ):
                     self.ActionToReplace = self.Actions[self.CurrentAction][self.currentFrame]["OnAction"][self.KeyPress]
@@ -85,25 +86,29 @@ class Character(Renderer):
             if("SoundName" in self.Actions[self.CurrentAction][self.currentFrame]):
                 self.SoundAudios[self.Actions[self.CurrentAction][self.currentFrame]["SoundName"]].play()
 
-            self.currentFrame+=1
-
-            if self.currentFrame >= len(self.Actions[self.CurrentAction] or ActionReplaced):
-                self.currentFrame = 0     
-
-            self.last_time = pygame.time.get_ticks()
-
             if("SpawnObject" in self.Actions[self.CurrentAction][self.currentFrame]):
                 objectSpawnData = self.Actions[self.CurrentAction][self.currentFrame]["SpawnObject"]
 
                 for data in objectSpawnData:
                     objectcopy = copy.deepcopy(Common.Common.ObjectsManager.Objects[data["Name"]])
                     if (self.Facing=="Left"):                
-                        objectcopy.location = [self.location[0]-sprite.get_width()/2+data["X"],self.location[1]-sprite.get_height()+data["Y"]]#[0]- sprite.get_width()
+                        objectcopy.location = [self.location[0]-sprite.get_width()/2+data["X"],self.location[1],sprite.get_height()-data["Y"]]#[0]- sprite.get_width()
                     else:
-                        objectcopy.location = [self.location[0]+sprite.get_width()/2-data["X"],self.location[1]-sprite.get_height()+data["Y"]]#[0]- sprite.get_width()
+                        objectcopy.location = [self.location[0]+sprite.get_width()/2-data["X"],self.location[1],sprite.get_height()-data["Y"]]#[0]- sprite.get_width()
                     objectcopy.Arena = self.Arena
                     objectcopy.Facing = self.Facing
                     self.ObjectsToSpawn.append(objectcopy)
+
+            self.currentFrame+=1
+
+            if ActionReplaced:
+                self.currentFrame = 0     
+            
+            if self.currentFrame >= len(self.Actions[self.CurrentAction]):
+                self.currentFrame = 0  
+
+            self.last_time = pygame.time.get_ticks()
+
         
         if(self.CameraShouldFollowPlayer):
             camera_location=[self.location[0],self.location[1]]
@@ -121,7 +126,7 @@ class Character(Renderer):
             if("Displacement" in self.Actions[self.CurrentAction][self.currentFrame]):
                 Displacement = self.Actions[self.CurrentAction][self.currentFrame]["Displacement"]
             
-            WIN.blit(sprite, (camera_location[0]-sprite.get_width()/2+Displacement["X"],camera_location[1]-sprite.get_height()++Displacement["Y"]))
+            WIN.blit(sprite, (camera_location[0]-sprite.get_width()/2+Displacement["X"],camera_location[1]-sprite.get_height()+Displacement["Y"]))
 
         else:
             camera_location=[self.location[0]+self.Arena.location[0],self.location[1]+self.Arena.location[1]]
@@ -134,8 +139,6 @@ class Character(Renderer):
             WIN.blit(sprite, (camera_location[0]-sprite.get_width()/2+Displacement["X"],camera_location[1]-sprite.get_height()+Displacement["Y"]))
 
         
-
-
     def RenderWithNavigate(self, WIN, FONT, WIDTH, HEIGHT, Key):
         pass
 
@@ -146,3 +149,25 @@ class Character(Renderer):
             obj = self.ObjectsToSpawn[0]
             del self.ObjectsToSpawn[0]
             return obj
+        
+    def GetHitBoxes(self):
+        resultarr = []
+        if("HitBoxes" in self.Actions[self.CurrentAction][self.currentFrame]): 
+            arr = self.Actions[self.CurrentAction][self.currentFrame]["HitBoxes"]
+            i = 0
+            for index, element in enumerate(arr):
+                tempsprite = self.ActionsImages[self.CurrentAction][self.currentFrame]
+                if isinstance(element, list):
+                    resultarr.append([self.location[0]-tempsprite.get_width()+arr[index][0],self.location[1]-tempsprite.get_height()+arr[index][1],arr[index][3],arr[index][4]])
+                else:
+                    tempsprite = self.ActionsImages[self.CurrentAction][self.currentFrame]
+            
+                    resultarr.append([self.location[0]-tempsprite.get_width(),self.location[1]-tempsprite.get_height(),tempsprite.get_width(),tempsprite.get_height()])
+        return resultarr
+    
+    def PerformCollision(self,CollidedObject):
+        if(CollidedObject.Actions[CollidedObject.CurrentAction][CollidedObject.currentFrame]["OnContact"] == "Hit"):
+            self.CurrentAction = "Hurt"
+            self.currentFrame = 0
+            self.last_time = pygame.time.get_ticks()
+            self.Health -= 1;

@@ -31,7 +31,12 @@
                     "Left":"Walking",
                     "Right":"Walking",
                     "Action1":"Shooting"
-                }
+                },
+                "HitBoxes":{
+                    "0": [103,84,64,216],
+                    "1": [119,21,52,57]
+                },
+                "OnContact":"Nothing"
             }
         ],
         "Walking":[
@@ -60,7 +65,8 @@
                     "Left":"Walking",
                     "Right":"Walking",
                     "Action1":"Shooting"
-                }
+                },
+                "OnContact":"Nothing"
             },
             {
                 "Image":"Policeman/Running/2 with goggles.png",
@@ -86,7 +92,8 @@
                     "Left":"Walking",
                     "Right":"Walking",
                     "Action1":"Shooting"
-                }
+                },
+                "OnContact":"Nothing"
 
             },{
                 "Image":"Policeman/Running/3 with goggles.png",
@@ -113,7 +120,8 @@
                     "Left":"Walking",
                     "Right":"Walking",
                     "Action1":"Shooting"
-                }
+                },
+                "OnContact":"Nothing"
 
             },{
                 "Image":"Policeman/Running/4 with goggles.png",
@@ -139,7 +147,8 @@
                     "Left":"Walking",
                     "Right":"Walking",
                     "Action1":"Shooting"
-                }
+                },
+                "OnContact":"Nothing"
             }
         ],
         "Shooting":[
@@ -177,7 +186,8 @@
                         "X":-50,
                         "Y":77
                     }
-                ]
+                ],
+                "OnContact":"Nothing"
                 
             },
             {
@@ -201,7 +211,8 @@
                     "Y":0
                 },
                 "DelaybeforeNextFrame":100,
-                "DelaybeforeNextAction":true
+                "DelaybeforeNextAction":true,
+                "OnContact":"Nothing"
             },
             {
                 "Image":"Policeman/shoot/shoot with aim.png",
@@ -231,8 +242,34 @@
                     "Left":"Walking",
                     "Right":"Walking",
                     "Action1":"Shooting"
-                }
+                },
+                "OnContact":"Nothing"
                 
+            }
+        ],
+        "Hurt":
+        [
+            {
+                "Image":"Policeman/Hit/Hit.png",
+                "Bounds":{
+                    "X":0,
+                    "Y":0,
+                    "Width":300,
+                    "Height":300
+                },
+                "InteractionArea":[
+                    {
+                        "X":0,
+                        "Y":0,
+                        "Width":300,
+                        "Height":300            
+                    }
+                ],
+                "DelaybeforeNextFrame":300,
+                "DelaybeforeNextAction":true,
+                "OnAction":{
+                },
+                "OnContact":"Nothing"
             }
         ]
 

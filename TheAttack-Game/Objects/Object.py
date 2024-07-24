@@ -8,7 +8,7 @@ class Object(Renderer):
     SoundAudios ={}
     CurrentAction = "Standing"
     KeyPress = ""
-    location = [0,0]
+    location = [0,0,0]
     Facing = "Right"
     last_time = None
     arenasize ={}
@@ -17,6 +17,7 @@ class Object(Renderer):
     Arena =None
     ActionToReplace = None
     Destroyed = False
+    ReachedAWall= False
     def __init__(self,obj):
         self.Name = ""
         self.Actions = []
@@ -46,6 +47,10 @@ class Object(Renderer):
             if("Destroy" in self.Actions[self.CurrentAction][self.currentFrame]["OnAction"]):
                 if(self.Actions[self.CurrentAction][self.currentFrame]["OnAction"]["Destroy"] ==""):
                     self.Destroyed = True
+                elif(self.Actions[self.CurrentAction][self.currentFrame]["OnAction"]["Destroy"] =="Hit"):
+                    if(self.ReachedAWall):
+                        self.Destroyed = True
+                
                 #elif(self.Actions[self.CurrentAction][self.currentFrame]["OnAction"]["Destroy"] ==""):
                 #todo when hit
 
@@ -77,6 +82,7 @@ class Object(Renderer):
                 self.location[1] += self.Actions[self.CurrentAction][self.currentFrame]["Move"]["DisplacmentY"]
 
                 if(not self.Arena.InWalkingArea(self.location,True)):
+                    self.ReachedAWall = True
                     self.location[0] = prevx
                     self.location[1] = prevy
 
@@ -92,14 +98,12 @@ class Object(Renderer):
 
             self.last_time = pygame.time.get_ticks()
 
-
-        
         sprite = self.ActionsImages[self.CurrentAction][self.currentFrame]
         if(self.Facing == "Left"):
             sprite = pygame.transform.flip(sprite, True, False)
 
     
-        camera_location=[self.location[0]+self.Arena.location[0],self.location[1]+self.Arena.location[1]]
+        camera_location=[self.location[0]+self.Arena.location[0],self.location[1]-self.Arena.location[1]-self.location[2]]
 
         Displacement = {"X":0,"Y":0}
 
@@ -109,7 +113,25 @@ class Object(Renderer):
         WIN.blit(sprite, (camera_location[0]-sprite.get_width()/2+Displacement["X"],camera_location[1]-sprite.get_height()+Displacement["Y"]))
 
         
-
-
     def RenderWithNavigate(self, WIN, FONT, WIDTH, HEIGHT, Key):
         pass
+
+    def GetHitBoxes(self):
+        resultarr = []
+        if("HitBoxes" in self.Actions[self.CurrentAction][self.currentFrame]): 
+            arr = self.Actions[self.CurrentAction][self.currentFrame]["HitBoxes"]
+            i = 0
+            for index, element in enumerate(arr):
+                tempsprite = self.ActionsImages[self.CurrentAction][self.currentFrame]
+                if isinstance(element, list):
+                    resultarr.append([self.location[0]-tempsprite.get_width()+arr[index][0],self.location[1]-tempsprite.get_height()+arr[index][1],arr[index][3],arr[index][4]])
+                else:
+                    tempsprite = self.ActionsImages[self.CurrentAction][self.currentFrame]
+            
+                    resultarr.append([self.location[0]-tempsprite.get_width(),self.location[1]-tempsprite.get_height(),tempsprite.get_width(),tempsprite.get_height()])
+        return resultarr
+    
+
+    def PerformCollision(self,CollidedObject):
+        pass
+

@@ -18,12 +18,16 @@
                 "DelaybeforeNextFrame":50,
                 "DelaybeforeNextAction":false,
                 "Move":{
-                    "DisplacmentX":50,
+                    "DisplacmentX":100,
                     "DisplacmentY":0
                 },
                 "OnAction":{
                     "Destroy":"Hit"
-                }
+                },
+                "HitBoxes":{
+                    "0": "full"
+                },
+                "OnContact":"Hit"
             }
         ]
     }

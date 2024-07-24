@@ -16,7 +16,8 @@
                 "InteractionArea":[
                 ],
                 "DelaybeforeNextFrame":50,
-                "DelaybeforeNextAction":false
+                "DelaybeforeNextAction":false,
+                "OnContact":"Nothing"
             },
             {
                 "Image":"Gunfire/2.png",
@@ -29,7 +30,8 @@
                 "InteractionArea":[
                 ],
                 "DelaybeforeNextFrame":50,
-                "DelaybeforeNextAction":false
+                "DelaybeforeNextAction":false,
+                "OnContact":"Nothing"
             },
             {
                 "Image":"Gunfire/3.png",
@@ -42,7 +44,8 @@
                 "InteractionArea":[
                 ],
                 "DelaybeforeNextFrame":50,
-                "DelaybeforeNextAction":false
+                "DelaybeforeNextAction":false,
+                "OnContact":"Nothing"
             },
             {
                 "Image":"Gunfire/4.png",
@@ -58,7 +61,8 @@
                 "DelaybeforeNextAction":false,
                 "OnAction":{
                     "Destroy":""
-                }
+                },
+                "OnContact":"Nothing"
             }
         ]
     }
